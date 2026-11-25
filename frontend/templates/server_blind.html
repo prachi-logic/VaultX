@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+  <h2>👁️ Server Blind Proof (Live Storage View)</h2>
+  <p class="subtitle">
+    Even if an attacker or server admin opens the server's storage folder, they only see random encrypted bytes and random filenames.
+  </p>
+
+  <button type="button" class="btn" id="refreshProofBtn" style="margin-bottom: 1.5rem;">🔄 Refresh Server Storage</button>
+
+  <div id="proofContainer" style="display: grid; gap: 1rem;">
+    <p style="color: var(--muted);">Loading server storage snapshot...</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/proof.js') }}"></script>
+{% endblock %}

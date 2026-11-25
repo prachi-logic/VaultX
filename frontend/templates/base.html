@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}VaultX | Secure File Sharing{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <span class="logo-icon">V</span>
+            Vault<span>X</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#security">Security</a>
+        </div>
+
+        <a href="#upload" class="nav-button">Get Started ↗</a>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="logo">
+            <span class="logo-icon">V</span>
+            Vault<span>X</span>
+        </div>
+
+        <p>Privacy is not optional. It's our foundation.</p>
+        <p class="copyright">
+            © 2026 VaultX. Secure sharing. Complete privacy.
+        </p>
+    </footer>
+
+    {% block scripts %}
+    {% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card" style="text-align: center;">
+  <h2>🔓 Decrypt & Download File</h2>
+  <p class="subtitle">
+    Your browser will fetch the encrypted file and decrypt it locally using the key from your link.
+  </p>
+
+  <div id="statusBox" style="margin: 1.5rem 0; padding: 1rem; background: var(--bg); border-radius: 8px;">
+    <p id="statusText" style="color: var(--accent);">Ready to decrypt...</p>
+  </div>
+
+  <button type="button" class="btn" id="downloadBtn">⬇️ Decrypt & Save File</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/encryption.js') }}"></script>
+<script src="{{ url_for('static', filename='js/download.js') }}"></script>
+{% endblock %}

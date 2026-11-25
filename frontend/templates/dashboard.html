@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | VaultX{% endblock %}
+
+{% block content %}
+<section class="panel wide">
+    <p class="tag">YOUR UPLOADS</p>
+    <h1>Dashboard</h1>
+    <p class="muted">
+        Names stay encrypted, so this page can only show the file id, size, expiry and access log.
+        The key is only in the share link you copied.
+    </p>
+
+    <h2>Files</h2>
+    <div id="file-list" class="list">Loading…</div>
+
+    <h2>Access log</h2>
+    <div id="log-list" class="list">Loading…</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/js/dashboard.js"></script>
+{% endblock %}

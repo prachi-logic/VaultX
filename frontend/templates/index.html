@@ -1,0 +1,326 @@
+
+{% extends "base.html" %}
+
+{% block title %}VaultX | Zero-Knowledge File Sharing{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="tag">
+            <span class="status-dot"></span>
+            ZERO-KNOWLEDGE SECURITY
+        </div>
+
+        <h1>
+            Your Files.<br>
+            Your Privacy.<br>
+            <span>Only Your Control.</span>
+        </h1>
+
+        <p class="hero-description">
+            Share files securely with client-side AES-256 encryption.
+            Your encryption key stays in your browser.
+            Even our server cannot read your files.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="#upload" class="primary-btn">
+                Secure Your Files ↗
+            </a>
+
+            <a href="#how-it-works" class="secondary-btn">
+                Explore How It Works
+            </a>
+        </div>
+
+        <div class="security-info">
+            <div>
+                <span class="check">✓</span>
+                End-to-end privacy
+            </div>
+
+            <div>
+                <span class="check">✓</span>
+                No readable files on server
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hero-visual">
+
+        <div class="glow-circle"></div>
+
+        <div class="security-card">
+
+            <div class="card-top">
+                <span>◈ VAULTX SECURITY</span>
+                <span class="live">● ACTIVE</span>
+            </div>
+
+            <div class="lock-icon">🔐</div>
+
+            <h3>Your Files Are Protected</h3>
+
+            <p>Military-grade encryption concept</p>
+
+            <div class="encryption-status">
+                <span>Encryption</span>
+                <strong>AES-256-GCM</strong>
+            </div>
+
+            <div class="encryption-status">
+                <span>Server Access</span>
+                <strong class="safe">BLIND</strong>
+            </div>
+
+            <div class="encryption-status">
+                <span>Key Storage</span>
+                <strong class="safe">YOUR BROWSER</strong>
+            </div>
+
+            <div class="progress-bar">
+                <div></div>
+            </div>
+
+            <p class="protected-text">
+                Your privacy is our priority.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- UPLOAD SECTION -->
+<section class="upload-section" id="upload">
+
+    <div class="section-heading">
+        <span class="tag">SECURE UPLOAD</span>
+        <h2>Protect Your <span>Digital World</span></h2>
+        <p>Select a file to get started with secure sharing.</p>
+    </div>
+
+    <div class="upload-box">
+
+        <div class="upload-icon">↑</div>
+
+        <h3>Drop your files here</h3>
+
+        <p>or select a file from your device</p>
+
+        <label for="fileInput" class="primary-btn upload-btn">
+            Browse Files
+        </label>
+
+        <input type="file" id="fileInput" hidden>
+
+        <p class="file-note">
+            Maximum file size: 25 MB (MVP)
+        </p>
+
+        <p id="fileName" class="selected-file"></p>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES SECTION -->
+<section class="features-section" id="features">
+
+    <div class="section-heading">
+        <span class="tag">WHY VAULTX?</span>
+
+        <h2>Security Without <span>Compromise</span></h2>
+
+        <p>Everything you need for private and controlled file sharing.</p>
+    </div>
+
+    <div class="features-grid">
+
+        <article class="feature-card">
+            <div class="feature-icon">🔐</div>
+            <h3>AES-256 Encryption</h3>
+            <p>
+                Files are encrypted inside your browser using
+                the Web Crypto API before being uploaded.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <h3>Secure Share Links</h3>
+            <p>
+                Generate unique links to share your encrypted
+                files with the intended receiver.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon">⏳</div>
+            <h3>Automatic Expiry</h3>
+            <p>
+                Set link expiry to 1 hour, 1 day or 7 days
+                to control file availability.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <h3>Server Blind Privacy</h3>
+            <p>
+                The server stores encrypted data and never
+                receives the decryption key.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon">📋</div>
+            <h3>Access Logs</h3>
+            <p>
+                Track file views and downloads through
+                access records.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon">🚫</div>
+            <h3>Access Revocation</h3>
+            <p>
+                Revoke a shared link when you no longer
+                want the file to remain accessible.
+            </p>
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="steps-section" id="how-it-works">
+
+    <div class="section-heading">
+        <span class="tag">SIMPLE PROCESS</span>
+        <h2>How <span>VaultX Works</span></h2>
+        <p>Three simple steps to secure your files.</p>
+    </div>
+
+    <div class="steps-grid">
+
+        <article class="step-card">
+            <span class="step-number">01</span>
+            <div class="feature-icon">🔒</div>
+            <h3>Encrypt</h3>
+            <p>
+                Select a file. Your browser generates an
+                AES-256 key and encrypts the file locally.
+            </p>
+        </article>
+
+        <article class="step-card">
+            <span class="step-number">02</span>
+            <div class="feature-icon">🔗</div>
+            <h3>Share</h3>
+            <p>
+                Upload only encrypted data and generate
+                a secure sharing link.
+            </p>
+        </article>
+
+        <article class="step-card">
+            <span class="step-number">03</span>
+            <div class="feature-icon">🔓</div>
+            <h3>Decrypt</h3>
+            <p>
+                The receiver uses the key from the link
+                fragment to decrypt the file in their browser.
+            </p>
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- SERVER BLIND PROOF -->
+<section class="proof-section" id="security">
+
+    <div class="proof-content">
+
+        <span class="tag">OUR BIGGEST DIFFERENCE</span>
+
+        <h2>
+            A Server That <span>Cannot Read Your Files.</span>
+        </h2>
+
+        <p>
+            Unlike traditional file-sharing platforms, VaultX
+            encrypts files before they reach the server.
+            The decryption key remains inside the user's browser.
+        </p>
+
+        <div class="proof-points">
+            <p>✓ Files encrypted before upload</p>
+            <p>✓ Encryption key never sent to server</p>
+            <p>✓ Server stores encrypted file data</p>
+        </div>
+
+    </div>
+
+    <div class="proof-visual">
+        <div class="proof-lock">🔐</div>
+        <h3>SERVER BLIND</h3>
+        <p>Encrypted Data Only</p>
+        <span>KEY NOT RECEIVED</span>
+    </div>
+
+</section>
+
+
+<!-- FINAL CTA -->
+<section class="cta-section" id="get-started">
+
+    <span class="tag">TAKE CONTROL</span>
+
+    <h2>Your Privacy Deserves <span>Better Protection.</span></h2>
+
+    <p>Start sharing files with confidence using VaultX.</p>
+
+    <a href="#upload" class="primary-btn">
+        Get Started With VaultX ↗
+    </a>
+
+</section>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+    const fileInput = document.getElementById("fileInput");
+    const fileName = document.getElementById("fileName");
+
+    fileInput.addEventListener("change", function () {
+
+        if (this.files.length > 0) {
+
+            const file = this.files[0];
+
+            fileName.textContent =
+                "Selected: " + file.name;
+
+        }
+
+    });
+</script>
+
+{% endblock %}
