@@ -1,50 +1,155 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VaultX - Premium Zero-Knowledge Encrypted Secure File Sharing Platform">
+    <meta name="theme-color" content="#060913">
 
-    <title>{% block title %}VaultX | Secure File Sharing{% endblock %}</title>
+    <title>{% block title %}VaultX | Zero-Knowledge Secure File Sharing{% endblock %}</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block styles %}{% endblock %}
 </head>
 
 <body>
+    <!-- Background Ambient Glow Mesh -->
+    <div class="ambient-glow ambient-glow-1"></div>
+    <div class="ambient-glow ambient-glow-2"></div>
 
-    <nav class="navbar">
-        <a href="/" class="logo">
-            <span class="logo-icon">V</span>
-            Vault<span>X</span>
-        </a>
+    <!-- Navigation Bar -->
+    <header class="navbar-wrapper">
+        <nav class="navbar" aria-label="Main Navigation">
+            <a href="/" class="logo">
+                <span class="logo-icon">🔐</span>
+                <span class="logo-text">Vault<span class="logo-accent">X</span></span>
+            </a>
 
-        <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="#features">Features</a>
-            <a href="#how-it-works">How It Works</a>
-            <a href="#security">Security</a>
+            <!-- Live Security Status Pill -->
+            <div class="nav-security-status" title="WebCrypto AES-256-GCM Zero-Knowledge Active">
+                <span class="pulse-dot-cyan"></span>
+                <span class="nav-sec-text">AES-256-GCM &middot; ZERO-KNOWLEDGE</span>
+            </div>
+
+            <!-- Desktop Nav Links -->
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="{{ url_for('upload_page') }}" class="nav-link">Upload Studio</a>
+                <a href="{{ url_for('dashboard_page') }}" class="nav-link">Dashboard</a>
+                <a href="{{ url_for('proof_page') }}" class="nav-link">Server Proof</a>
+                <a href="/#how-it-works" class="nav-link">Architecture</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="{{ url_for('upload_page') }}" class="nav-button">
+                    <span>⚡ Encrypt & Share</span>
+                    <span class="nav-button-arrow">↗</span>
+                </a>
+                <button type="button" class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Navigation Menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Navigation Drawer -->
+        <div class="mobile-drawer" id="mobileDrawer">
+            <div class="mobile-drawer-content">
+                <a href="/" class="mobile-nav-link">🏠 Home</a>
+                <a href="{{ url_for('upload_page') }}" class="mobile-nav-link">📤 Upload Studio</a>
+                <a href="{{ url_for('dashboard_page') }}" class="mobile-nav-link">📊 Vault Dashboard</a>
+                <a href="{{ url_for('proof_page') }}" class="mobile-nav-link">🛡️ Server Blind Proof</a>
+                <a href="/#how-it-works" class="mobile-nav-link">🔐 Cryptography Architecture</a>
+                <a href="{{ url_for('upload_page') }}" class="primary-btn btn-block" style="margin-top: 15px;">
+                    Encrypt & Upload File ↗
+                </a>
+            </div>
         </div>
+    </header>
 
-        <a href="#upload" class="nav-button">Get Started ↗</a>
-    </nav>
+    <!-- Global Toast Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
-    <main>
+    <!-- Main Application Content -->
+    <main class="main-content">
         {% block content %}
         {% endblock %}
     </main>
 
+    <!-- Footer -->
     <footer class="footer">
-        <div class="logo">
-            <span class="logo-icon">V</span>
-            Vault<span>X</span>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="/" class="logo">
+                    <span class="logo-icon">🔐</span>
+                    <span class="logo-text">Vault<span class="logo-accent">X</span></span>
+                </a>
+                <p class="footer-tagline">
+                    Zero-Knowledge Client-Side Encrypted File Exchange.
+                    Keys never leave your browser. Built for mathematical confidentiality.
+                </p>
+                <div class="footer-badges">
+                    <span class="crypto-chip">AES-256-GCM</span>
+                    <span class="crypto-chip">Web Crypto API</span>
+                    <span class="crypto-chip">Server-Blind</span>
+                    <span class="crypto-chip">SQLite WAL</span>
+                </div>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4 class="footer-col-title">Platform</h4>
+                <a href="/">Home</a>
+                <a href="{{ url_for('upload_page') }}">Upload File</a>
+                <a href="{{ url_for('dashboard_page') }}">Vault Dashboard</a>
+                <a href="{{ url_for('proof_page') }}">Server Storage Inspector</a>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4 class="footer-col-title">Security Guarantees</h4>
+                <span>100% Client-Side Encryption</span>
+                <span>Zero Keys Transmitted</span>
+                <span>Authenticated 128-bit Tags</span>
+                <span>Automatic Self-Destruction</span>
+            </div>
         </div>
 
-        <p>Privacy is not optional. It's our foundation.</p>
-        <p class="copyright">
-            © 2026 VaultX. Secure sharing. Complete privacy.
-        </p>
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2026 VaultX. Military-Grade Client Encrypted Vault &middot; College Hackathon Edition.</p>
+                <p class="text-muted"><span class="safe-dot">●</span> 100% Server-Blind Architecture &middot; Flask & SQLite WAL</p>
+            </div>
+        </div>
     </footer>
+
+
+
+    <!-- Mobile Menu Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuBtn = document.getElementById("mobileMenuBtn");
+            const drawer = document.getElementById("mobileDrawer");
+            if (menuBtn && drawer) {
+                menuBtn.addEventListener("click", function () {
+                    drawer.classList.toggle("open");
+                    menuBtn.classList.toggle("active");
+                });
+                document.querySelectorAll(".mobile-nav-link").forEach(link => {
+                    link.addEventListener("click", () => {
+                        drawer.classList.remove("open");
+                        menuBtn.classList.remove("active");
+                    });
+                });
+            }
+        });
+    </script>
 
     {% block scripts %}
     {% endblock %}

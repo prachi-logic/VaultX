@@ -1,24 +1,248 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard | VaultX{% endblock %}
+{% block title %}Dashboard | VaultX File Analytics &amp; Cybersecurity Posture{% endblock %}
 
 {% block content %}
-<section class="panel wide">
-    <p class="tag">YOUR UPLOADS</p>
-    <h1>Dashboard</h1>
-    <p class="muted">
-        Names stay encrypted, so this page can only show the file id, size, expiry and access log.
-        The key is only in the share link you copied.
-    </p>
+<div class="page-container dashboard-page">
 
-    <h2>Files</h2>
-    <div id="file-list" class="list">Loading…</div>
+    <!-- Dashboard Top Bar -->
+    <div class="dashboard-header">
+        <div>
+            <div class="dashboard-tag-row">
+                <span class="tag">VAULT ANALYTICS &amp; CYBERSECURITY POSTURE</span>
+                <div id="system-health-badge" class="health-badge">
+                    <span class="health-status-dot online"></span>
+                    <span>Checking Vault Engine...</span>
+                </div>
+            </div>
+            <h1 class="page-title">Vault Security Dashboard</h1>
+            <p class="page-subtitle text-muted">
+                Monitor zero-knowledge cryptographic integrity, live link countdowns, emergency revocation, and real-time threat detection.
+            </p>
+        </div>
+        <div class="dashboard-top-actions">
+            <button type="button" class="secondary-btn" id="refreshDashboardBtn" title="Refresh vault data">
+                <span>🔄</span>
+                <span>Refresh Data</span>
+            </button>
+            <a href="{{ url_for('upload_page') }}" class="primary-btn">
+                <span>+ Upload New File</span>
+            </a>
+        </div>
+    </div>
 
-    <h2>Access log</h2>
-    <div id="log-list" class="list">Loading…</div>
-</section>
+    <!-- Stats Counter Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-card-top">
+                <span class="stat-label">Total Files Sealed</span>
+                <div class="stat-icon stat-icon-purple">📁</div>
+            </div>
+            <div class="stat-card-bottom">
+                <strong id="stat-total-files" class="stat-value">0</strong>
+                <span class="stat-trend text-purple">AES-256-GCM</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-card-top">
+                <span class="stat-label">Active Secure Links</span>
+                <div class="stat-icon stat-icon-green">⚡</div>
+            </div>
+            <div class="stat-card-bottom">
+                <strong id="stat-active-files" class="stat-value">0</strong>
+                <span class="stat-trend text-safe">Unexpired</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-card-top">
+                <span class="stat-label">Total Decryptions</span>
+                <div class="stat-icon stat-icon-cyan">⬇️</div>
+            </div>
+            <div class="stat-card-bottom">
+                <strong id="stat-total-downloads" class="stat-value">0</strong>
+                <span class="stat-trend text-cyan">Verified Downloads</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-card-top">
+                <span class="stat-label">Vault Storage Used</span>
+                <div class="stat-icon stat-icon-blue">💾</div>
+            </div>
+            <div class="stat-card-bottom">
+                <strong id="stat-total-size" class="stat-value">0 KB</strong>
+                <span class="stat-trend text-muted">Raw Ciphertext</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SMART SECURITY SCORE & CONTROLS SECTION -->
+    <section class="security-score-section" id="security-score-section">
+        <div class="section-title-bar">
+            <div class="title-with-badge">
+                <h2>Smart Security Score</h2>
+                <span id="score-grade-badge" class="section-badge badge-active">CALCULATING...</span>
+            </div>
+            <div class="score-header-actions">
+                <button type="button" class="btn-ghost-sm" id="recalculateScoreBtn" title="Recalculate authentic security score from backend checks">
+                    <span>⚡ Recalculate Score</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="security-score-grid">
+            <!-- Left: Score Dial & Grade Summary -->
+            <div class="security-score-card">
+                <div class="score-dial-wrap">
+                    <div class="score-circle" id="scoreCircle">
+                        <span class="score-num" id="security-score-val">--</span>
+                        <span class="score-max">/100</span>
+                    </div>
+                </div>
+                <div class="score-info-wrap">
+                    <div class="score-status-row">
+                        <span class="score-status-indicator pulse-dot-green" id="scoreStatusDot"></span>
+                        <strong class="score-status-title" id="security-score-status">EVALUATING CONTROLS</strong>
+                    </div>
+                    <p class="score-desc text-muted" id="security-score-desc">
+                        Determined solely by authentic backend verification of encryption standards, zero-knowledge storage, link expiry TTL, and active threat defense.
+                    </p>
+                    <div class="score-meta-tags">
+                        <span class="crypto-chip" id="scoreGradeChip">GRADE: --</span>
+                        <span class="crypto-chip" id="threatCountChip">0 Active Threats</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Enabled Security Controls Checklist -->
+            <div class="security-controls-card">
+                <h3 class="controls-title">Verified Active Security Controls</h3>
+                <p class="controls-subtitle text-muted">Real-time inspection of cryptographic features and storage architecture:</p>
+                <div class="security-checks-list" id="security-checks-list">
+                    <div class="loading-placeholder">Evaluating active security features...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUSPICIOUS ACTIVITY & THREAT ALERTS SECTION -->
+    <section class="threat-alerts-section" id="threatAlertsSection">
+        <div class="section-title-bar">
+            <div class="title-with-badge">
+                <h2>Suspicious Activity Alerts</h2>
+                <span id="threats-count-badge" class="section-badge badge-neutral">0 Active Warnings</span>
+            </div>
+            <span class="text-muted section-hint">Continuous anomaly detection over 30-minute threat window</span>
+        </div>
+        <div id="security-alerts-feed" class="threat-alerts-container">
+            <div class="threat-normal-banner">
+                <span class="shield-icon">🛡️</span>
+                <div>
+                    <strong>All Systems Secure &mdash; Threat Level: NORMAL</strong>
+                    <p class="text-muted">No repeated failed access attempts, revoked link probing, or enumeration scans detected.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search & Filter Bar -->
+    <div class="dashboard-toolbar">
+        <div class="search-box-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="dashboard-search" class="search-input" placeholder="Search files by name or unique ID...">
+        </div>
+        <div class="filter-pills-wrap">
+            <button type="button" class="filter-pill active" data-filter="all">All Files</button>
+            <button type="button" class="filter-pill" data-filter="active">Active Only</button>
+            <button type="button" class="filter-pill" data-filter="expired">Expired</button>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="dashboard-grid">
+
+        <!-- Files Section -->
+        <section class="dashboard-main-section">
+            <div class="section-title-bar">
+                <div class="title-with-badge">
+                    <h2>Encrypted Files In Vault</h2>
+                    <span class="section-badge">Client Keys Preserved</span>
+                </div>
+                <span class="text-muted section-hint">Decryption keys stored only on client device</span>
+            </div>
+            <div id="file-list" class="cards-list">
+                <div class="loading-placeholder">Loading vault files...</div>
+            </div>
+        </section>
+
+        <!-- Activity Timeline Section -->
+        <section class="dashboard-side-section">
+            <div class="section-title-bar">
+                <div class="title-with-badge">
+                    <h2>Activity Timeline</h2>
+                    <span class="section-badge badge-active">Live Audit Trail</span>
+                </div>
+            </div>
+            <p class="section-hint text-muted">Cryptographic audit log of file upload, view, download, revoke, and expiry events.</p>
+
+            <!-- Timeline Filter Pills -->
+            <div class="timeline-filter-bar">
+                <button type="button" class="timeline-pill active" data-timeline-filter="all">All</button>
+                <button type="button" class="timeline-pill" data-timeline-filter="upload">Uploads</button>
+                <button type="button" class="timeline-pill" data-timeline-filter="download">Downloads</button>
+                <button type="button" class="timeline-pill" data-timeline-filter="view">Views</button>
+                <button type="button" class="timeline-pill" data-timeline-filter="revoke">Revocations</button>
+                <button type="button" class="timeline-pill" data-timeline-filter="threat">Threats</button>
+            </div>
+
+            <div id="log-list" class="logs-feed activity-timeline-feed">
+                <div class="loading-placeholder">Loading audit trail...</div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+<!-- EMERGENCY REVOKE CONFIRMATION MODAL -->
+<div class="modal-overlay" id="revokeModal" role="dialog" aria-modal="true" aria-labelledby="revokeModalTitle">
+    <div class="modal-card modal-card-danger">
+        <div class="modal-header">
+            <div>
+                <span class="tag tag-danger">🚨 EMERGENCY ACCESS REVOCATION</span>
+                <h3 id="revokeModalTitle" class="modal-title">Revoke File Access</h3>
+            </div>
+            <button type="button" class="modal-close-btn" id="revokeModalClose" aria-label="Close Modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="revoke-warning-callout">
+                <div class="warning-icon">⚠️</div>
+                <div class="warning-text">
+                    <p>You are about to execute an <strong>emergency revocation</strong> for:</p>
+                    <p class="revoke-target-filename" id="revokeTargetFilename">filename.ext</p>
+                </div>
+            </div>
+            <ul class="revoke-consequences-list">
+                <li><span class="text-danger">●</span> <strong>Immediate Disk Purge:</strong> Encrypted ciphertext file will be unlinked and permanently erased from the server disk.</li>
+                <li><span class="text-danger">●</span> <strong>Permanent Link Invalidation:</strong> The old sharing link will stop working instantly and return HTTP 404 (Revoked).</li>
+                <li><span class="text-danger">●</span> <strong>Audit Logging:</strong> A permanent revocation record will be written to the Activity Timeline.</li>
+                <li><span class="text-danger">●</span> <strong>Irreversible:</strong> This action cannot be undone even with the original key.</li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="secondary-btn" id="revokeCancelBtn">
+                Cancel
+            </button>
+            <button type="button" class="btn-danger-glow" id="revokeConfirmBtn">
+                🗑️ Confirm Emergency Revoke
+            </button>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
-<script type="module" src="/js/dashboard.js"></script>
+<script type="module" src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}

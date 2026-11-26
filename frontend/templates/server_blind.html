@@ -1,17 +1,64 @@
 {% extends "base.html" %}
 
+{% block title %}Server Blind Proof | VaultX Zero-Knowledge Inspection{% endblock %}
+
 {% block content %}
-<div class="card">
-  <h2>👁️ Server Blind Proof (Live Storage View)</h2>
-  <p class="subtitle">
-    Even if an attacker or server admin opens the server's storage folder, they only see random encrypted bytes and random filenames.
-  </p>
+<div class="page-container">
 
-  <button type="button" class="btn" id="refreshProofBtn" style="margin-bottom: 1.5rem;">🔄 Refresh Server Storage</button>
+    <div class="panel-card proof-studio">
 
-  <div id="proofContainer" style="display: grid; gap: 1rem;">
-    <p style="color: var(--muted);">Loading server storage snapshot...</p>
-  </div>
+        <div class="panel-header text-center">
+            <span class="tag tag-success">🛡️ ZERO-KNOWLEDGE ARCHITECTURE PROOF</span>
+            <h1 class="panel-title">Server Blind Storage Inspector</h1>
+            <p class="panel-subtitle">
+                Live cryptographic inspection of the server's disk storage.
+                Even if an adversary breaches the server or inspects <code>uploads/*.bin</code> and <code>vaultx.db</code>,
+                they only observe pseudo-random entropy. The decryption keys exist strictly in client browser memory.
+            </p>
+        </div>
+
+        <!-- Verification Highlights Grid -->
+        <div class="proof-highlights-grid">
+            <div class="highlight-item">
+                <span class="check-icon">✓</span>
+                <div>
+                    <strong>Zero Keys On Server</strong>
+                    <p class="text-muted">Keys are generated client-side and stay in the URL <code>#</code> hash fragment.</p>
+                </div>
+            </div>
+            <div class="highlight-item">
+                <span class="check-icon">✓</span>
+                <div>
+                    <strong>Pure AES-256-GCM Ciphertext</strong>
+                    <p class="text-muted">Files on disk are raw authenticated binary payloads with 12-byte IVs and 128-bit tags.</p>
+                </div>
+            </div>
+            <div class="highlight-item">
+                <span class="check-icon">✓</span>
+                <div>
+                    <strong>Randomized File Identifiers</strong>
+                    <p class="text-muted">Disk filenames are 128-bit URL-safe tokens (e.g. <code>bZuCKEK4...bin</code>) with no plaintext names.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="proof-action-bar">
+            <button type="button" class="primary-btn btn-sm" id="refreshProofBtn">
+                <span>🔄</span>
+                <span>Refresh Server Storage Snapshot</span>
+            </button>
+            <span class="storage-path-note text-muted">
+                Inspecting: <code>uploads/*.bin</code> &middot; Database: <code>vaultx.db:vault_files</code>
+            </span>
+        </div>
+
+        <!-- Live Storage Container -->
+        <div id="proofContainer" class="proof-list">
+            <div class="loading-placeholder">Inspecting server storage snapshot...</div>
+        </div>
+
+    </div>
+
 </div>
 {% endblock %}
 

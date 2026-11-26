@@ -1,188 +1,163 @@
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VaultX | Secure Upload</title>
+{% block title %}Upload Studio | VaultX Zero-Knowledge Secure File Sharing{% endblock %}
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+{% block content %}
+<div class="page-container">
 
-        body {
-            background: #080d1b;
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+    <div class="panel-card upload-studio">
 
-        .upload-container {
-            width: 100%;
-            max-width: 550px;
-            background: #111a2e;
-            padding: 35px;
-            border-radius: 18px;
-            border: 1px solid #263653;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
+        <div class="panel-header text-center">
+            <span class="tag">🛡️ ZERO-KNOWLEDGE ENCRYPTION STUDIO</span>
+            <h1 class="panel-title">Secure File Upload</h1>
+            <p class="panel-subtitle">
+                Your file is encrypted locally in your browser with <strong>AES-256-GCM</strong> before leaving your device.
+                The 256-bit decryption key is never transmitted or stored on the server.
+            </p>
+        </div>
 
-        .logo {
-            color: #60a5fa;
-            font-size: 28px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #9caec8;
-            text-align: center;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .upload-box {
-            border: 2px dashed #3b82f6;
-            border-radius: 12px;
-            padding: 35px 15px;
-            text-align: center;
-            background: #17243c;
-            cursor: pointer;
-        }
-
-        .upload-box:hover {
-            background: #1c2d49;
-        }
-
-        .upload-icon {
-            font-size: 45px;
-            margin-bottom: 15px;
-        }
-
-        .upload-box p {
-            color: #b8c7dc;
-            font-size: 14px;
-            margin-top: 8px;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .file-info {
-            margin-top: 20px;
-            padding: 15px;
-            background: #1b2942;
-            border-radius: 10px;
-            display: none;
-            word-break: break-word;
-        }
-
-        .file-info p {
-            margin: 7px 0;
-            color: #cbd5e1;
-            font-size: 14px;
-        }
-
-        .upload-btn {
-            width: 100%;
-            padding: 14px;
-            margin-top: 22px;
-            border: none;
-            border-radius: 9px;
-            background: #2563eb;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .upload-btn:hover {
-            background: #1d4ed8;
-        }
-
-        .upload-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        #status {
-            margin-top: 18px;
-            text-align: center;
-            font-size: 14px;
-            color: #93c5fd;
-            overflow-wrap: anywhere;
-        }
-
-        .security-note {
-            margin-top: 25px;
-            padding: 13px;
-            background: #102b2a;
-            border: 1px solid #166653;
-            border-radius: 9px;
-            color: #86efac;
-            font-size: 12px;
-            text-align: center;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="upload-container">
-
-        <div class="logo">🔐 VaultX</div>
-
-        <h2>Secure File Upload</h2>
-
-        <p class="subtitle">
-            Protect your files with AES-256-GCM encryption
-        </p>
-
-        <label for="fileInput" class="upload-box">
-            <div class="upload-icon">📁</div>
-            <h3>Select Your File</h3>
-            <p>Click here to browse files from your device</p>
-            <p>Any file type supported</p>
+        <!-- Drag & Drop Upload Zone -->
+        <label for="fileInput" class="upload-dropzone" id="dropZone">
+            <div class="upload-icon-pulse">
+                <span class="dropzone-icon">📁</span>
+            </div>
+            <h3>Drop your file here, or <span class="highlight">browse</span></h3>
+            <p class="dropzone-hint">Supports any file type up to 25 MB &middot; Encrypted in browser memory</p>
+            <input type="file" id="fileInput" class="file-input-hidden">
         </label>
 
-        <input type="file" id="fileInput">
-
-        <div class="file-info" id="fileInfo">
-            <p><strong>File Name:</strong> <span id="fileName"></span></p>
-            <p><strong>File Size:</strong> <span id="fileSize"></span></p>
-            <p><strong>File Type:</strong> <span id="fileType"></span></p>
+        <!-- Selected File Preview Card -->
+        <div class="file-info-card" id="fileInfo" style="display: none;">
+            <div class="file-info-main">
+                <div class="file-type-icon" id="fileIcon">📄</div>
+                <div class="file-details">
+                    <h4 id="fileName" class="file-name-text">filename.ext</h4>
+                    <div class="file-meta-pills">
+                        <span id="fileSize" class="pill">0 KB</span>
+                        <span id="fileType" class="pill pill-muted">application/octet-stream</span>
+                        <span class="pill pill-safe">Local Encrypt Ready</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-remove-file" id="removeFileBtn" title="Remove file">✕</button>
+            </div>
         </div>
 
-        <button class="upload-btn" id="uploadBtn" disabled>
-            🔒 Encrypt & Upload
-        </button>
-
-        <div id="status" role="status" aria-live="polite">
-            Select a file to get started.
+        <!-- Expiry Selector -->
+        <div class="form-group expiry-group">
+            <label class="form-label">
+                <span class="label-title">⏳ Link Expiry Period:</span>
+                <span class="label-hint">Payload automatically self-destructs when countdown completes</span>
+            </label>
+            <div class="expiry-options">
+                <label class="expiry-pill">
+                    <input type="radio" name="expiryOption" value="1h">
+                    <span class="pill-btn">
+                        <span class="pill-icon">⚡</span>
+                        <span>1 Hour</span>
+                    </span>
+                </label>
+                <label class="expiry-pill">
+                    <input type="radio" name="expiryOption" value="1d" checked>
+                    <span class="pill-btn">
+                        <span class="pill-icon">🕒</span>
+                        <span>1 Day (Recommended)</span>
+                    </span>
+                </label>
+                <label class="expiry-pill">
+                    <input type="radio" name="expiryOption" value="7d">
+                    <span class="pill-btn">
+                        <span class="pill-icon">📅</span>
+                        <span>7 Days</span>
+                    </span>
+                </label>
+            </div>
         </div>
 
-        <div class="security-note">
-            🛡️ Your file will be encrypted in your browser before upload.
+        <!-- Action Button -->
+        <div class="action-container">
+            <button type="button" class="primary-btn btn-block btn-lg" id="uploadBtn" disabled>
+                <span>🔒 Encrypt &amp; Upload File</span>
+            </button>
+        </div>
+
+        <!-- Multi-Stage Animated Progress Bar -->
+        <div class="progress-bar-container" id="uploadProgressBar" style="display: none;">
+            <div class="progress-header">
+                <span class="progress-stage-text" id="uploadProgressStage">Initializing encryption...</span>
+                <span class="progress-percent-text" id="uploadProgressPercent">0%</span>
+            </div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="uploadProgressFill"></div>
+            </div>
+            <div class="progress-steps-indicator">
+                <span class="step-chip">1. Key Gen</span>
+                <span class="step-chip">2. AES-256</span>
+                <span class="step-chip">3. IV &amp; Tag</span>
+                <span class="step-chip">4. Zero-Knowledge Send</span>
+            </div>
+        </div>
+
+        <!-- Live Status Message -->
+        <div id="status" class="status-message info" role="status" aria-live="polite">
+            Select or drag a file to begin client-side encryption.
+        </div>
+
+        <!-- Result Card (Shown after successful upload) -->
+        <div class="result-card" id="resultBox" style="display: none;">
+            <div class="result-header">
+                <div class="success-badge">
+                    <span class="success-badge-icon">✓</span>
+                    <span>ZERO-KNOWLEDGE ENCRYPTED &amp; UPLOADED</span>
+                </div>
+                <h3 class="result-title">Your Secure Sharing Link is Ready</h3>
+                <p class="result-subtitle">
+                    The 256-bit decryption key is embedded solely after the <code>#</code> symbol.
+                    The server never sees this key.
+                </p>
+                <div id="resultExpiryCountdown" class="result-countdown-wrap"></div>
+            </div>
+
+            <!-- Stylized Copy-Link Bar -->
+            <div class="share-link-wrapper">
+                <div class="share-link-field">
+                    <span class="link-prefix-icon">🔗</span>
+                    <input type="text" id="shareLinkInput" class="share-link-input" readonly>
+                </div>
+                <button type="button" class="primary-btn btn-copy-link" id="copyLinkBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy Share Link</span>
+                </button>
+            </div>
+
+            <div class="result-actions">
+                <a href="#" id="openLinkBtn" class="secondary-btn" target="_blank">
+                    <span>👁️ Test Decrypt Link ↗</span>
+                </a>
+                <button type="button" class="btn-ghost" id="resetUploadBtn">
+                    + Encrypt Another File
+                </button>
+            </div>
+
+            <div class="security-callout">
+                <div class="callout-icon">🔐</div>
+                <div class="callout-text">
+                    <strong>Zero-Knowledge Guarantee (RFC 3986):</strong>
+                    The decryption key is embedded solely after the <code>#</code> symbol.
+                    Browsers do NOT send the hash fragment to web servers.
+                    If this link is lost, the file cannot be decrypted by anyone — not even the system administrators.
+                </div>
+            </div>
         </div>
 
     </div>
 
-    <script src="{{ url_for('static', filename='js/encryption.js') }}" defer></script>
-    <script src="{{ url_for('static', filename='js/upload.js') }}" defer></script>
+</div>
+{% endblock %}
 
-</body>
-</html>
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/encryption.js') }}"></script>
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}

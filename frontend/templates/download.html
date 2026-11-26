@@ -1,17 +1,190 @@
 {% extends "base.html" %}
 
+{% block title %}Decrypt &amp; Download | VaultX{% endblock %}
+
 {% block content %}
-<div class="card" style="text-align: center;">
-  <h2>🔓 Decrypt & Download File</h2>
-  <p class="subtitle">
-    Your browser will fetch the encrypted file and decrypt it locally using the key from your link.
-  </p>
+<div class="page-container">
 
-  <div id="statusBox" style="margin: 1.5rem 0; padding: 1rem; background: var(--bg); border-radius: 8px;">
-    <p id="statusText" style="color: var(--accent);">Ready to decrypt...</p>
-  </div>
+    <div class="panel-card download-card">
 
-  <button type="button" class="btn" id="downloadBtn">⬇️ Decrypt & Save File</button>
+        <!-- Loading State Card -->
+        <div id="loadingCard" class="text-center state-card">
+            <div class="spinner-container">
+                <div class="cyber-spinner"></div>
+            </div>
+            <h2 class="state-title">Verifying Vault Ciphertext...</h2>
+            <p class="text-muted">Fetching file envelope and validating local cryptographic token.</p>
+        </div>
+
+        <!-- Error State Card (Expired / Not Found / Missing Key) -->
+        <div id="errorCard" class="text-center state-card" style="display: none;">
+            <div class="state-icon error-icon">⚠️</div>
+            <h2 class="state-title">Unable to Decrypt File</h2>
+            <p id="errorMessage" class="state-description text-muted">
+                The file you are looking for has either expired, been revoked, or the decryption key is missing from the link.
+            </p>
+            <div class="error-actions" style="margin-top: 2rem;">
+                <a href="{{ url_for('upload_page') }}" class="primary-btn">
+                    <span>Upload a New File ↗</span>
+                </a>
+                <a href="/" class="secondary-btn" style="margin-left: 10px;">
+                    <span>Return to Home</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Valid File Details & Decrypt Actions -->
+        <div id="fileCard" style="display: none;">
+
+            <div class="panel-header text-center">
+                <span class="tag tag-success">🔐 ZERO-KNOWLEDGE ENCRYPTED</span>
+                <h1 class="panel-title">Secure File Ready</h1>
+                <p class="panel-subtitle">
+                    This file is encrypted with <strong>AES-256-GCM</strong>. Decryption occurs strictly inside your browser memory.
+                </p>
+            </div>
+
+            <!-- LIVE LINK EXPIRY COUNTDOWN WIDGET -->
+            <div class="countdown-widget" id="countdownWidget">
+                <div class="countdown-header">
+                    <span class="countdown-title">⏳ SECURE LINK EXPIRATION TIMER</span>
+                    <div id="countdownBadge" class="countdown-badge-wrap">
+                        <span class="live-dot-pulse"></span>
+                        <span>Calculating time remaining...</span>
+                    </div>
+                </div>
+
+                <div class="countdown-digits-grid">
+                    <div class="countdown-digit-box">
+                        <span class="digit-value" id="timerDays">00</span>
+                        <span class="digit-label">DAYS</span>
+                    </div>
+                    <div class="countdown-sep">:</div>
+                    <div class="countdown-digit-box">
+                        <span class="digit-value" id="timerHours">00</span>
+                        <span class="digit-label">HOURS</span>
+                    </div>
+                    <div class="countdown-sep">:</div>
+                    <div class="countdown-digit-box">
+                        <span class="digit-value" id="timerMins">00</span>
+                        <span class="digit-label">MINUTES</span>
+                    </div>
+                    <div class="countdown-sep">:</div>
+                    <div class="countdown-digit-box">
+                        <span class="digit-value" id="timerSecs">00</span>
+                        <span class="digit-label">SECONDS</span>
+                    </div>
+                </div>
+
+                <div class="countdown-bar-wrap">
+                    <div class="countdown-bar-track">
+                        <div class="countdown-bar-fill" id="timerProgressBar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Overview Card -->
+            <div class="file-overview-card">
+                <div class="file-overview-header">
+                    <span class="file-badge-icon" id="downloadFileIcon">📦</span>
+                    <div class="file-title-wrap">
+                        <h2 id="downloadFileName" class="file-primary-name">filename.ext</h2>
+                        <span id="downloadFileType" class="file-mime-badge">application/octet-stream</span>
+                    </div>
+                </div>
+
+                <div class="file-details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Payload Size</span>
+                        <strong id="downloadFileSize" class="detail-value">0 KB</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Cipher Suite</span>
+                        <span class="detail-value text-cyan">AES-256-GCM &middot; 256-Bit</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Total Downloads</span>
+                        <span id="downloadFileDownloads" class="detail-value">0 downloads</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Decryption Scope</span>
+                        <span class="detail-value text-safe">Browser RAM Only ✓</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLEAN SECURITY STATUS SECTION SHOWING AES-256-GCM -->
+            <div class="security-status-box">
+                <div class="sec-status-header">
+                    <span class="sec-status-icon">🛡️</span>
+                    <div class="sec-status-title-wrap">
+                        <h4>AES-256-GCM Cryptographic Verification</h4>
+                        <p class="text-muted">Zero-knowledge proof verified for this file</p>
+                    </div>
+                </div>
+                <div class="sec-status-chips">
+                    <div class="sec-chip">
+                        <span class="chip-label">Cipher</span>
+                        <strong>AES-256-GCM</strong>
+                    </div>
+                    <div class="sec-chip">
+                        <span class="chip-label">Key Size</span>
+                        <strong>256 Bits</strong>
+                    </div>
+                    <div class="sec-chip">
+                        <span class="chip-label">Nonce</span>
+                        <strong>96-Bit Unique IV</strong>
+                    </div>
+                    <div class="sec-chip">
+                        <span class="chip-label">Integrity Tag</span>
+                        <strong>128-Bit Polyval</strong>
+                    </div>
+                    <div class="sec-chip">
+                        <span class="chip-label">Server Plaintext</span>
+                        <strong class="text-safe">0 Bytes (Zero-Knowledge)</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dual Action Buttons -->
+            <div class="dual-actions">
+                <button type="button" class="primary-btn btn-lg" id="downloadBtn">
+                    <span>⬇️ Decrypt &amp; Download File</span>
+                </button>
+                <button type="button" class="secondary-btn btn-lg" id="previewBtn">
+                    <span>👁️ View / Preview in Browser</span>
+                </button>
+            </div>
+
+            <!-- Status Indicator -->
+            <div id="downloadStatus" class="status-message info" style="display: none;" role="status">
+                Click Decrypt &amp; Download to decrypt the file directly on your device.
+            </div>
+
+            <!-- In-Browser Preview Container -->
+            <div id="previewContainer" class="preview-wrapper" style="display: none;">
+                <div class="preview-header">
+                    <h4>👁️ In-Browser Decrypted Preview</h4>
+                    <span class="preview-tag">Decrypted Locally in RAM</span>
+                </div>
+                <div id="previewContent" class="preview-body">
+                    <!-- Dynamic preview loaded by download.js -->
+                </div>
+            </div>
+
+            <div class="security-callout" style="margin-top: 2rem;">
+                <div class="callout-icon">🛡️</div>
+                <div class="callout-text">
+                    <strong>Client-Side Verification:</strong>
+                    Your browser uses the secret key from the URL hash (<code>#key</code>) to decrypt the ciphertext in volatile RAM.
+                    No unencrypted data ever travels over the network wire.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 {% endblock %}
 

@@ -1,326 +1,390 @@
-
 {% extends "base.html" %}
 
-{% block title %}VaultX | Zero-Knowledge File Sharing{% endblock %}
+{% block title %}VaultX | Premium Zero-Knowledge Secure File Sharing{% endblock %}
 
 {% block content %}
 
 <!-- HERO SECTION -->
 <section class="hero">
-
     <div class="hero-content">
-
-        <div class="tag">
+        <div class="tag hero-tag">
             <span class="status-dot"></span>
-            ZERO-KNOWLEDGE SECURITY
+            ZERO-KNOWLEDGE ARCHITECTURE &middot; AES-256-GCM
         </div>
 
-        <h1>
+        <h1 class="hero-title">
             Your Files.<br>
             Your Privacy.<br>
-            <span>Only Your Control.</span>
+            <span class="gradient-text">Only Your Control.</span>
         </h1>
 
         <p class="hero-description">
-            Share files securely with client-side AES-256 encryption.
-            Your encryption key stays in your browser.
-            Even our server cannot read your files.
+            Share confidential files with mathematical certainty.
+            Your files are encrypted inside your browser with <strong>AES-256-GCM</strong> before touching the network.
+            The decryption key never reaches our server. Even our database administrators cannot inspect your data.
         </p>
 
         <div class="hero-buttons">
-            <a href="#upload" class="primary-btn">
-                Secure Your Files ↗
+            <a href="#upload" class="primary-btn btn-lg">
+                <span>🔒 Secure a File Now</span>
+                <span class="arrow">↗</span>
             </a>
-
-            <a href="#how-it-works" class="secondary-btn">
-                Explore How It Works
+            <a href="#security-spec" class="secondary-btn btn-lg">
+                <span>🛡️ View Cryptographic Spec</span>
             </a>
         </div>
 
         <div class="security-info">
-            <div>
-                <span class="check">✓</span>
-                End-to-end privacy
+            <div class="security-info-item">
+                <span class="check-icon">✓</span>
+                <span>Client-Side AES-256-GCM</span>
             </div>
-
-            <div>
-                <span class="check">✓</span>
-                No readable files on server
+            <div class="security-info-item">
+                <span class="check-icon">✓</span>
+                <span>100% Server-Blind Storage</span>
+            </div>
+            <div class="security-info-item">
+                <span class="check-icon">✓</span>
+                <span>Auto Self-Destruct Timers</span>
             </div>
         </div>
-
     </div>
 
     <div class="hero-visual">
-
         <div class="glow-circle"></div>
 
         <div class="security-card">
-
             <div class="card-top">
-                <span>◈ VAULTX SECURITY</span>
-                <span class="live">● ACTIVE</span>
+                <div class="card-top-left">
+                    <span class="pulse-dot-cyan"></span>
+                    <span class="card-top-title">VAULTX CRYPTO ENGINE</span>
+                </div>
+                <span class="badge badge-active">● ACTIVE</span>
             </div>
 
-            <div class="lock-icon">🔐</div>
-
-            <h3>Your Files Are Protected</h3>
-
-            <p>Military-grade encryption concept</p>
-
-            <div class="encryption-status">
-                <span>Encryption</span>
-                <strong>AES-256-GCM</strong>
+            <div class="lock-icon-container">
+                <div class="lock-icon">🔐</div>
             </div>
 
-            <div class="encryption-status">
-                <span>Server Access</span>
-                <strong class="safe">BLIND</strong>
+            <h3 class="security-card-title">Zero-Knowledge Vault</h3>
+            <p class="security-card-subtitle">Authenticated In-Browser Symmetric Encryption</p>
+
+            <div class="crypto-spec-list">
+                <div class="crypto-spec-row">
+                    <span class="spec-label">Cipher Suite</span>
+                    <strong class="spec-value text-cyan">AES-256-GCM (Galois)</strong>
+                </div>
+                <div class="crypto-spec-row">
+                    <span class="spec-label">Key Length</span>
+                    <strong class="spec-value">256 Bits (CSPRNG)</strong>
+                </div>
+                <div class="crypto-spec-row">
+                    <span class="spec-label">Nonce / IV</span>
+                    <strong class="spec-value">96 Bits (12-Byte Unique)</strong>
+                </div>
+                <div class="crypto-spec-row">
+                    <span class="spec-label">Integrity Tag</span>
+                    <strong class="spec-value">128 Bits (Authenticated)</strong>
+                </div>
+                <div class="crypto-spec-row">
+                    <span class="spec-label">Server Visibility</span>
+                    <strong class="spec-value text-safe">BLIND (Ciphertext Only)</strong>
+                </div>
+                <div class="crypto-spec-row">
+                    <span class="spec-label">Key Location</span>
+                    <strong class="spec-value text-purple">Browser RAM &amp; URL #Hash</strong>
+                </div>
             </div>
 
-            <div class="encryption-status">
-                <span>Key Storage</span>
-                <strong class="safe">YOUR BROWSER</strong>
-            </div>
-
-            <div class="progress-bar">
-                <div></div>
+            <div class="progress-bar-wrap">
+                <div class="progress-shimmer-bar"></div>
             </div>
 
             <p class="protected-text">
-                Your privacy is our priority.
+                <span class="shield-mini">🛡️</span> Privacy mathematically guaranteed by modern cryptography.
             </p>
-
         </div>
-
     </div>
-
 </section>
 
 
 <!-- UPLOAD SECTION -->
 <section class="upload-section" id="upload">
-
-    <div class="section-heading">
-        <span class="tag">SECURE UPLOAD</span>
-        <h2>Protect Your <span>Digital World</span></h2>
-        <p>Select a file to get started with secure sharing.</p>
+    <div class="section-heading text-center">
+        <span class="tag">⚡ ZERO-KNOWLEDGE STUDIO</span>
+        <h2>Encrypt &amp; Share in <span>Seconds</span></h2>
+        <p>Drop your file below. It will be encrypted locally in WebCrypto RAM before being stored in the vault.</p>
     </div>
 
-    <div class="upload-box">
-
-        <div class="upload-icon">↑</div>
-
-        <h3>Drop your files here</h3>
-
-        <p>or select a file from your device</p>
-
-        <label for="fileInput" class="primary-btn upload-btn">
-            Browse Files
+    <div class="panel-card upload-studio upload-home-box">
+        <!-- Drag & Drop Upload Zone -->
+        <label for="fileInput" class="upload-dropzone" id="dropZone">
+            <div class="upload-icon-pulse">
+                <span class="dropzone-icon">📁</span>
+            </div>
+            <h3>Drop your file here, or <span class="highlight">browse</span></h3>
+            <p class="dropzone-hint">Any file type supported &middot; Up to 25 MB &middot; Encrypted in browser memory</p>
+            <input type="file" id="fileInput" class="file-input-hidden">
         </label>
 
-        <input type="file" id="fileInput" hidden>
+        <!-- Selected File Preview Card -->
+        <div class="file-info-card" id="fileInfo" style="display: none;">
+            <div class="file-info-main">
+                <div class="file-type-icon" id="fileIcon">📄</div>
+                <div class="file-details">
+                    <h4 id="fileName" class="file-name-text">filename.ext</h4>
+                    <div class="file-meta-pills">
+                        <span id="fileSize" class="pill">0 KB</span>
+                        <span id="fileType" class="pill pill-muted">application/octet-stream</span>
+                        <span class="pill pill-safe">Local Encrypt Ready</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-remove-file" id="removeFileBtn" title="Remove file">✕</button>
+            </div>
+        </div>
 
-        <p class="file-note">
-            Maximum file size: 25 MB (MVP)
-        </p>
+        <!-- Expiry Selector -->
+        <div class="form-group expiry-group">
+            <label class="form-label">
+                <span class="label-title">⏳ Link Expiry Period:</span>
+                <span class="label-hint">Payload automatically self-destructs when countdown completes</span>
+            </label>
+            <div class="expiry-options">
+                <label class="expiry-pill">
+                    <input type="radio" name="expiryOption" value="1h">
+                    <span class="pill-btn">
+                        <span class="pill-icon">⚡</span>
+                        <span>1 Hour</span>
+                    </span>
+                </label>
+                <label class="expiry-pill">
+                    <input type="radio" name="expiryOption" value="1d" checked>
+                    <span class="pill-btn">
+                        <span class="pill-icon">🕒</span>
+                        <span>1 Day (Recommended)</span>
+                    </span>
+                </label>
+                <label class="expiry-pill">
+                    <input type="radio" name="expiryOption" value="7d">
+                    <span class="pill-btn">
+                        <span class="pill-icon">📅</span>
+                        <span>7 Days</span>
+                    </span>
+                </label>
+            </div>
+        </div>
 
-        <p id="fileName" class="selected-file"></p>
+        <!-- Action Button -->
+        <div class="action-container">
+            <button type="button" class="primary-btn btn-block btn-lg" id="uploadBtn" disabled>
+                <span>🔒 Encrypt &amp; Upload File</span>
+            </button>
+        </div>
 
+        <!-- Multi-Stage Animated Progress Bar -->
+        <div class="progress-bar-container" id="uploadProgressBar" style="display: none;">
+            <div class="progress-header">
+                <span class="progress-stage-text" id="uploadProgressStage">Initializing encryption...</span>
+                <span class="progress-percent-text" id="uploadProgressPercent">0%</span>
+            </div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="uploadProgressFill"></div>
+            </div>
+            <div class="progress-steps-indicator">
+                <span class="step-chip">1. Key Gen</span>
+                <span class="step-chip">2. AES-256</span>
+                <span class="step-chip">3. IV &amp; Tag</span>
+                <span class="step-chip">4. Zero-Knowledge Send</span>
+            </div>
+        </div>
+
+        <!-- Live Status Message -->
+        <div id="status" class="status-message info" role="status" aria-live="polite">
+            Select or drag a file to begin client-side encryption.
+        </div>
+
+        <!-- Result Card (Shown after successful upload) -->
+        <div class="result-card" id="resultBox" style="display: none;">
+            <div class="result-header">
+                <div class="success-badge">
+                    <span class="success-badge-icon">✓</span>
+                    <span>ZERO-KNOWLEDGE ENCRYPTED &amp; UPLOADED</span>
+                </div>
+                <h3 class="result-title">Your Secure Sharing Link is Ready</h3>
+                <p class="result-subtitle">
+                    The 256-bit decryption key is isolated in the URL fragment after the <code>#</code>.
+                    The server never sees this key.
+                </p>
+                <div id="resultExpiryCountdown" class="result-countdown-wrap"></div>
+            </div>
+
+            <!-- Stylized Copy-Link Bar -->
+            <div class="share-link-wrapper">
+                <div class="share-link-field">
+                    <span class="link-prefix-icon">🔗</span>
+                    <input type="text" id="shareLinkInput" class="share-link-input" readonly>
+                </div>
+                <button type="button" class="primary-btn btn-copy-link" id="copyLinkBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy Share Link</span>
+                </button>
+            </div>
+
+            <div class="result-actions">
+                <a href="#" id="openLinkBtn" class="secondary-btn" target="_blank">
+                    <span>👁️ Test Decrypt Link ↗</span>
+                </a>
+                <button type="button" class="btn-ghost" id="resetUploadBtn">
+                    + Encrypt Another File
+                </button>
+            </div>
+
+            <div class="security-callout">
+                <div class="callout-icon">🔐</div>
+                <div class="callout-text">
+                    <strong>Zero-Knowledge Guarantee (RFC 3986):</strong>
+                    Everything after <code>#</code> is processed exclusively by client browsers and is mathematically omitted from HTTP headers and server logs.
+                    If this link is lost, the file ciphertext is permanently unrecoverable by anyone.
+                </div>
+            </div>
+        </div>
     </div>
-
 </section>
 
 
-<!-- FEATURES SECTION -->
-<section class="features-section" id="features">
-
-    <div class="section-heading">
-        <span class="tag">WHY VAULTX?</span>
-
-        <h2>Security Without <span>Compromise</span></h2>
-
-        <p>Everything you need for private and controlled file sharing.</p>
+<!-- SECURITY STATUS & CRYPTOGRAPHIC SPEC SECTION -->
+<section class="security-section" id="security-spec">
+    <div class="section-heading text-center">
+        <span class="tag">VERIFIABLE CRYPTOGRAPHY</span>
+        <h2>Military-Grade <span>Security Architecture</span></h2>
+        <p>VaultX relies on mathematically sound cryptographic algorithms with zero trust assumptions on the server.</p>
     </div>
 
-    <div class="features-grid">
+    <div class="security-spec-grid">
+        <div class="spec-card">
+            <div class="spec-card-icon">🔒</div>
+            <h3>AES-256-GCM</h3>
+            <p class="spec-card-lead">Authenticated Encryption with Associated Data (AEAD)</p>
+            <ul class="spec-bullet-list">
+                <li><strong>256-Bit Keys:</strong> 1.15 &times; 10<sup>77</sup> possible key combinations; resistant to brute-force and quantum Grover attacks.</li>
+                <li><strong>Galois Mode:</strong> Provides both confidentiality and authenticated ciphertext integrity in a single pass.</li>
+                <li><strong>Web Crypto API:</strong> Executes natively in browser C++ engines via hardware acceleration (AES-NI).</li>
+            </ul>
+        </div>
 
-        <article class="feature-card">
-            <div class="feature-icon">🔐</div>
-            <h3>AES-256 Encryption</h3>
-            <p>
-                Files are encrypted inside your browser using
-                the Web Crypto API before being uploaded.
-            </p>
-        </article>
+        <div class="spec-card">
+            <div class="spec-card-icon">🎲</div>
+            <h3>96-Bit Nonce &amp; CSPRNG</h3>
+            <p class="spec-card-lead">Cryptographically Secure Random Initialization Vectors</p>
+            <ul class="spec-bullet-list">
+                <li><strong>12-Byte Fresh IV:</strong> Generated for every single upload via <code>window.crypto.getRandomValues</code>.</li>
+                <li><strong>No Nonce Reuse:</strong> Prevents Galois/Counter Mode key recovery attacks by guaranteeing unique IVs.</li>
+                <li><strong>Isolated Storage:</strong> IV is transmitted alongside ciphertext, while the key remains strictly in browser memory.</li>
+            </ul>
+        </div>
 
-        <article class="feature-card">
-            <div class="feature-icon">🔗</div>
-            <h3>Secure Share Links</h3>
-            <p>
-                Generate unique links to share your encrypted
-                files with the intended receiver.
-            </p>
-        </article>
+        <div class="spec-card">
+            <div class="spec-card-icon">🛡️</div>
+            <h3>128-Bit GCM Authentication</h3>
+            <p class="spec-card-lead">Tamper-Proof Integrity Verification</p>
+            <ul class="spec-bullet-list">
+                <li><strong>Polyval / GHASH Tag:</strong> Any bit modification to the stored ciphertext causes decryption to throw an immediate cryptographic exception.</li>
+                <li><strong>Zero Silent Corruption:</strong> Malicious tampering in transit or on disk is caught before any plaintext is extracted.</li>
+                <li><strong>No Man-In-The-Middle:</strong> Recipients receive verifiable proof that the file is bit-for-bit identical to the sender's original.</li>
+            </ul>
+        </div>
 
-        <article class="feature-card">
-            <div class="feature-icon">⏳</div>
-            <h3>Automatic Expiry</h3>
-            <p>
-                Set link expiry to 1 hour, 1 day or 7 days
-                to control file availability.
-            </p>
-        </article>
-
-        <article class="feature-card">
-            <div class="feature-icon">🛡️</div>
-            <h3>Server Blind Privacy</h3>
-            <p>
-                The server stores encrypted data and never
-                receives the decryption key.
-            </p>
-        </article>
-
-        <article class="feature-card">
-            <div class="feature-icon">📋</div>
-            <h3>Access Logs</h3>
-            <p>
-                Track file views and downloads through
-                access records.
-            </p>
-        </article>
-
-        <article class="feature-card">
-            <div class="feature-icon">🚫</div>
-            <h3>Access Revocation</h3>
-            <p>
-                Revoke a shared link when you no longer
-                want the file to remain accessible.
-            </p>
-        </article>
-
+        <div class="spec-card">
+            <div class="spec-card-icon">🌐</div>
+            <h3>RFC 3986 Hash Fragment</h3>
+            <p class="spec-card-lead">Client-Side Zero-Knowledge URL Isolation</p>
+            <ul class="spec-bullet-list">
+                <li><strong>Hash Isolation:</strong> W3C and IETF standards dictate that URL fragments (<code>#key</code>) are never sent in HTTP request lines.</li>
+                <li><strong>Zero Server Knowledge:</strong> The Flask backend, Nginx reverse proxies, and SQLite database never observe the decryption key.</li>
+                <li><strong>Local Ephemeral Lifecycle:</strong> Keys exist strictly in RAM during decryption and are garbage-collected upon tab closure.</li>
+            </ul>
+        </div>
     </div>
-
 </section>
 
 
 <!-- HOW IT WORKS -->
 <section class="steps-section" id="how-it-works">
-
-    <div class="section-heading">
-        <span class="tag">SIMPLE PROCESS</span>
+    <div class="section-heading text-center">
+        <span class="tag">SIMPLE WORKFLOW</span>
         <h2>How <span>VaultX Works</span></h2>
-        <p>Three simple steps to secure your files.</p>
+        <p>Three straightforward steps from local file to zero-knowledge verified decryption.</p>
     </div>
 
     <div class="steps-grid">
-
         <article class="step-card">
             <span class="step-number">01</span>
             <div class="feature-icon">🔒</div>
-            <h3>Encrypt</h3>
+            <h3>1. Local Encryption</h3>
             <p>
-                Select a file. Your browser generates an
-                AES-256 key and encrypts the file locally.
+                You select any file up to 25 MB. Your browser's WebCrypto engine generates a 256-bit key and encrypts the file locally with an authenticated GCM tag.
             </p>
         </article>
 
         <article class="step-card">
             <span class="step-number">02</span>
             <div class="feature-icon">🔗</div>
-            <h3>Share</h3>
+            <h3>2. Secure Share Link</h3>
             <p>
-                Upload only encrypted data and generate
-                a secure sharing link.
+                Only unreadable ciphertext is sent to the vault. A unique secure sharing link is generated, embedding the secret key exclusively after the URL <code>#</code> hash fragment.
             </p>
         </article>
 
         <article class="step-card">
             <span class="step-number">03</span>
             <div class="feature-icon">🔓</div>
-            <h3>Decrypt</h3>
+            <h3>3. In-Browser Decryption</h3>
             <p>
-                The receiver uses the key from the link
-                fragment to decrypt the file in their browser.
+                The recipient opens the link. Their browser extracts the key from the hash, pulls the ciphertext from the vault, and decrypts the original file locally in RAM.
             </p>
         </article>
-
     </div>
-
 </section>
 
 
-<!-- SERVER BLIND PROOF -->
+<!-- SERVER BLIND PROOF TEASER -->
 <section class="proof-section" id="security">
-
     <div class="proof-content">
-
-        <span class="tag">OUR BIGGEST DIFFERENCE</span>
-
-        <h2>
-            A Server That <span>Cannot Read Your Files.</span>
-        </h2>
-
+        <span class="tag">SERVER-BLIND PROOF</span>
+        <h2>A Server That <span>Cannot Read Your Files</span></h2>
         <p>
-            Unlike traditional file-sharing platforms, VaultX
-            encrypts files before they reach the server.
-            The decryption key remains inside the user's browser.
+            Unlike traditional cloud providers who store decryption keys in backend key vaults, VaultX is engineered to be completely server-blind.
+            Even with physical possession of the server, administrators only hold random binary noise.
         </p>
 
         <div class="proof-points">
-            <p>✓ Files encrypted before upload</p>
-            <p>✓ Encryption key never sent to server</p>
-            <p>✓ Server stores encrypted file data</p>
+            <p><span class="check">✓</span> Files encrypted locally using browser Web Crypto API</p>
+            <p><span class="check">✓</span> Decryption keys never transmitted over the network</p>
+            <p><span class="check">✓</span> Disk files contain raw AES-256-GCM binary ciphertext only</p>
+            <p><span class="check">✓</span> Live cryptographic storage inspector with entropy metrics</p>
         </div>
 
+        <div style="margin-top: 30px;">
+            <a href="{{ url_for('proof_page') }}" class="secondary-btn btn-lg">
+                <span>🛡️ Inspect Live Server Storage Snapshot ↗</span>
+            </a>
+        </div>
     </div>
 
     <div class="proof-visual">
         <div class="proof-lock">🔐</div>
         <h3>SERVER BLIND</h3>
-        <p>Encrypted Data Only</p>
-        <span>KEY NOT RECEIVED</span>
+        <p>Authenticated Binary Ciphertext Only</p>
+        <span class="proof-tag-pill">ZERO KEYS ON SERVER</span>
     </div>
-
-</section>
-
-
-<!-- FINAL CTA -->
-<section class="cta-section" id="get-started">
-
-    <span class="tag">TAKE CONTROL</span>
-
-    <h2>Your Privacy Deserves <span>Better Protection.</span></h2>
-
-    <p>Start sharing files with confidence using VaultX.</p>
-
-    <a href="#upload" class="primary-btn">
-        Get Started With VaultX ↗
-    </a>
-
 </section>
 
 {% endblock %}
 
-
 {% block scripts %}
-
-<script>
-    const fileInput = document.getElementById("fileInput");
-    const fileName = document.getElementById("fileName");
-
-    fileInput.addEventListener("change", function () {
-
-        if (this.files.length > 0) {
-
-            const file = this.files[0];
-
-            fileName.textContent =
-                "Selected: " + file.name;
-
-        }
-
-    });
-</script>
-
+<script src="{{ url_for('static', filename='js/encryption.js') }}"></script>
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
 {% endblock %}
